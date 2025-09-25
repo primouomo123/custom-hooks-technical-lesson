@@ -1,8 +1,7 @@
 **Technical Lesson: Refactoring API Calls with Custom Hooks and npm Package Management**
 ========================================================================================
 
-**Introduction**
-----------------
+## Task 1: Define the Problem
 
 In React applications, fetching data from an API is a common task. However, when multiple components need to fetch different data, they often **duplicate the same logic**, leading to code that is:
 
@@ -10,7 +9,7 @@ In React applications, fetching data from an API is a common task. However, when
 -   **Repetitive** ❌ -- Similar `useEffect` logic is used across components.
 -   **Error-prone** ❌ -- Debugging network requests becomes harder.
 
-### ✅ **Solution:**
+## Task 2: Determine the Design
 
 To **fix** this, we will:
 
@@ -20,29 +19,18 @@ To **fix** this, we will:
 
 * * * * *
 
-**Task 1: Setup the project and Manage Dependencies with npm**
-----------------------------------------------------
-**Project Setup: Installing Dependencies**
-------------------------------------------
+## Task 3: Develop, Test, and Refine the Code
 
-### **Step 1: Ensure You Have Node.js and npm Installed**
+### **Step 1: Fork, Clone, and Run the Application**
 
-Before starting, confirm you have **Node.js** and **npm** installed.\
-Run the following command to check:
-
-```bash
-node -v
-npm -v
-```
-### **Step 2: Create a React Project Using Vite**
-
-You can use this [repo](https://github.com/learn-co-curriculum/custom-hooks-technical-lesson) , create one using **Vite**:
+Fork this [repo](https://github.com/learn-co-curriculum/custom-hooks-technical-lesson) , then open in VSCode:
 ```bash
 # Create a new Vite project
-npm create vite@latest my-app --template react
+git clone <link to your forked repo>
 
-# Navigate into the project folder
-cd my-app
+# Navigate into the project folder and open in VSCode
+cd custom-hooks-technical lesson
+code .
 
 # Install necessary dependencies
 npm install
@@ -50,31 +38,24 @@ npm install
 # Start the development server
 npm run dev
 ```
-This will:\
-✅ Set up a **React development environment** using Vite.\
-✅ Install **default dependencies** (React, ReactDOM).\
-✅ Start a local server at `http://localhost:5173/`.
 
-### **Step 3: Install Additional Dependencies**
+### **Step 2: Install Additional Dependencies**
 
-To enhance debugging and manage package dependencies, install the following:
+To enhance debugging and logging, install the following:
 ```bash
-npm install react-router-dom chalk
-
+npm install chalk
 ```
 
-### **Why use Chalk?**
+#### **Why use Chalk?**
 
 -   ✅ **Enhances debugging** -- Color-coded logs help identify success, errors, and warnings.
 -   ✅ **Improves readability** -- Makes console output **clearer** when fetching API data.
-### **react-router-dom**
--   ✅ **`react-router-dom`** -- Enables page navigation.
 
+### **Step 3: Evaluate Current Code**
 
 **Scenario: Why Use a Custom Hook?**
-------------------------------------
 
-### **❌ BEFORE (Without a Custom Hook - Current State)**
+#### **❌ BEFORE (Without a Custom Hook - Current State)**
 
 Right now, both `Posts.jsx` and `Users.jsx` fetch data separately. Each uses `useEffect` with **duplicated API-fetching logic**.
 
@@ -167,10 +148,7 @@ function Users() {
 export default Users;
 ```
 
-**Task 2: Create the Custom Hook (`useFetchData.js`)**
-------------------------------------------------------
-
-### **Step 1: Add a New File for the Hook**
+### **Step 4: Add a New File for the Custom Hook**
 
 Create a new file inside `src/hooks/` called **`useFetchData.js`**.
 
@@ -228,11 +206,7 @@ export default useFetchData;
 -   **Uses Chalk** -- Adds **color-coded console logs** for easier debugging.
 
 
-
-**Task 3: Use the Custom Hook in Components**
----------------------------------------------
-
-### **Step 2: Refactor `Posts.jsx`**
+### **Step 5: Refactor `Posts.jsx` to Use Custom Hook**
 
 📁 **File: `src/components/Posts.jsx`**
 ```jsx
@@ -269,8 +243,7 @@ export default Posts;
 -   Includes a **"Refresh" button** to manually re-fetch posts.
 -   Chalk logs API requests and errors.
 
-#### **Step 3: Refactor `Users.jsx`**
---------------------------------
+### **Step 6: Refactor `Users.jsx` to Use Custom Hook**
 
 Now, let's replace the old `useEffect` logic in **`Users.jsx`** with our **Custom Hook (`useFetchData`)**.
 
@@ -310,21 +283,12 @@ export default Users;
 -   Improved readability and maintainability.
 
 
-### **Task 4: Manage Dependencies and Security**
-
-#### **Step 4: Viewing Installed Dependencies**
+### **Step 7: View Installed Dependencies and Vulnerabilities**
 
 To list all installed packages:
 
 ```sh
 npm list --depth=0
-```
-
-**Updating Dependencies**  
-To update all installed packages to the latest minor/patch versions, run:  
-
-```sh
-npm update
 ```
 
 **Checking for Security Vulnerabilities**  
@@ -334,18 +298,12 @@ To scan the project for security vulnerabilities in dependencies, run:
 npm audit
 ```
 
-If critical vulnerabilities require major version updates, use:  
-
-```sh
-npm audit fix --force
-```
-
 ---
 
-**Task 5: Document, Refactor, and Maintain**
+## **Task 5: Document and Maintain**
 --------------------------------------------
 
-### **Step 5: Using Git Best Practices**
+### **Using Git Best Practices**
 
 To track changes efficiently, follow this Git workflow:
 
@@ -394,7 +352,3 @@ By completing this lesson, students have:
 ✅ **Removed duplicate `useEffect` logic**, making the code more modular.\
 ✅ **Installed and used Chalk** to log API requests.\
 ✅ **Followed npm best practices** for package management.
-
-🚀 **Next Steps:** 🔹 Extend `useFetchData` to support **POST requests**.\
-🔹 Optimize with **useCallback** to prevent unnecessary re-fetching.\
-🔹 Introduce **pagination** to manage large datasets efficiently.
