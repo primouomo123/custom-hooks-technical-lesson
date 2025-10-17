@@ -1,27 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import useFetchData from "../hooks/useFetchData";
 
 function Posts() {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/posts")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Failed to fetch posts");
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setPosts(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, []);
+  const { data, loading, error, refetch } = useFetchData(
+    "https://jsonplaceholder.typicode.com/posts"
+  );
 
   if (loading) return <p className="loading">Loading posts...</p>;
   if (error) return <p className="error">Error: {error}</p>;
@@ -29,8 +12,9 @@ function Posts() {
   return (
     <div className="container">
       <h2>Posts</h2>
+      <button onClick={refetch}>Refresh Posts</button>
       <ul>
-        {posts.map((post) => (
+        {data.map((post) => (
           <li key={post.id}>{post.title}</li>
         ))}
       </ul>
